@@ -1,4 +1,6 @@
 <h1>book#show</h1>
+<div><%= flash[:notice] %></div>
+
 <h1>Book detail</h1>
 
 <table>
@@ -8,16 +10,17 @@
     <th>Opinion</th>
   </tr>
   <tr>
-    <td>画像：<%#= image_tag book.user.get_profile_image(100,100) %>
-      <br><%= @book.user.name %>
+    <td><%= image_tag @book.user.get_profile_image(100,100) %>
+      <br><%= link_to user_path(params[:id]) do %>
+            <%= @book.user.name %>
+          <% end %>
     </td>
     <td><%= @book.title %></td>
     <td><%= @book.body %></td>
 
       <% if @book.user == current_user %>
       <td>
-        Edit
-        <%#= link_to "Edit", edit_book_path(book.id) %>
+        <%= link_to "Edit", edit_book_path(@book) %>
       </td>
       <td>
         <%= link_to "Destroy", book_path(@book), method: :delete %>
