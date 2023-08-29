@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update]
+
   def new
     @user = User.new
   end
@@ -8,18 +10,17 @@ class UsersController < ApplicationController
     @books = @user.books
   end
 
+
   def index
-    @user = User.new
+    @user = current_user
     @users = User.all
   end
 
   def edit
-    is_matching_login_user
     @user = User.find(params[:id])
   end
 
   def update
-    is_matching_login_user
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "You have update user successfully."
